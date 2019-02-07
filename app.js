@@ -9,16 +9,37 @@ var jsonParser = bodyParser.json()
 // create application/x-www-form-urlencoded parser
 var urlencodedParser = bodyParser.urlencoded({ extended: false })
 
+var form = {
+	username: 'usr',
+	password: 'pwd'
+};
+
+var isIncorrect = false;
+
+
 app.set('view engine', 'ejs');
 
 // POST /login gets urlencoded bodies
 app.post('/login', urlencodedParser, function (req, res) {
-  if (!req.body) return res.sendStatus(400)
-  res.send('welcome, ' + req.body.username)
+	var username = req.body.username;
+	var password = req.body.password
+
+	if (!req.body) return res.sendStatus(400)
+
+	if(username == form.username & password == password){
+		res.send('welcome, ' + username);
+	}
+
+	isIncorrect = true;
+
+	return res.redirect('/');
+	
 })
 
 app.get('/', (req, res) => {
   res.render('index', {foo: 'FOO'});
+
+  if(isIncorrect) res.send('Login Incorrect');
 });
 
-app.listen(3000, () => console.log('Example app listening on port 4000!'));
+app.listen(3000, () => console.log('Example app listening on port 3000!'));
