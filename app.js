@@ -5,13 +5,13 @@ var app = express()
 
 // create application/json parser
 var jsonParser = bodyParser.json()
- 
+
 // create application/x-www-form-urlencoded parser
 var urlencodedParser = bodyParser.urlencoded({ extended: false })
 
 var form = {
-	username: 'usr',
-	password: 'pwd'
+  usr: 'pwd',
+	usr2: 'pwd2'
 };
 
 var isIncorrect = false;
@@ -26,20 +26,33 @@ app.post('/login', urlencodedParser, function (req, res) {
 
 	if (!req.body) return res.sendStatus(400)
 
-	if(username == form.username & password == password){
+	if(form[req.params.username] == req.params.password){
 		res.send('welcome, ' + username);
 	}
 
 	isIncorrect = true;
 
 	return res.redirect('/');
-	
+
 })
 
 app.get('/', (req, res) => {
   res.render('index', {foo: 'FOO'});
 
   if(isIncorrect) res.send('Login Incorrect');
+});
+
+app.get('/api/login/:username/:password', function (req, res){
+    var json = {};
+
+    if(form[req.params.username] == req.params.password){
+      json.satatus = "OK";
+      res.send(json);
+      return;
+    }
+
+    json.satatus = "ERROR";
+    res.send(json);
 });
 
 app.listen(3000, () => console.log('Example app listening on port 3000!'));
