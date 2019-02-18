@@ -55,4 +55,4 @@ app.get('/api/login/:username/:password', function (req, res){
     res.send(json);
 });
 
-app.listen(3000, () => console.log('Example app listening on port 3000!'));
+app.listen(process.env.PORT || 5000, () => console.log('Example app listening on port 3000!'));
