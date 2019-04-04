@@ -67,7 +67,7 @@ app.get('/api/login/:username/:password', function (req, res){
   var json = {};
   try {
     const client = await pool.connect()
-    const result = await client.query("SELECT * FROM test_table WHERE name='" + req.params.username + "' AND password='" + req.params.password + "'");
+    const result = await client.query("SELECT * FROM test_table WHERE name='Jordi' AND password='123'");
     const results = result.rows;
     //res.render('pages', results );
     if(results[0] != null) {
