@@ -67,7 +67,7 @@ app.get('/db', async (req, res) => {
     try {
       const client = await pool.connect()
       const result = await client.query("SELECT * FROM test_table");
-      const results = { 'results': (result) ? result.rows : null};
+      const results = result.rows;
       //res.render('pages', results );
       res.send(JSON.stringify(results));
       client.release();
