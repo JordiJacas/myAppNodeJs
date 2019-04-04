@@ -66,10 +66,10 @@ app.get('/api/login/:username/:password', function (req, res){
 app.get('/db', async (req, res) => {
     try {
       const client = await pool.connect()
-      const result = await client.query('SELECT * FROM test_table');
-      const results = { 'results': (result) ? result.rows : null};
+      const result = await client.query("SELECT * FROM test_table WHERE name='Jordi' AND password='123'");
+      //const results = { 'results': (result) ? result.rows : null};
       //res.render('pages', results );
-      res.send(JSON.stringify(results));
+      res.send(JSON.stringify(result));
       client.release();
     } catch (err) {
       console.error(err);
