@@ -81,14 +81,14 @@ app.get('/db', async (req, res) => {
       const result = await client.query("SELECT * FROM test_table WHERE name='Jo' AND password='123'");
       const results = { 'results': (result) ? result.rows : null};
       //res.render('pages', results );
-      if(results.isEmpty()){
+      if(results[0].isEmpty()){
         json.satatus = "OK";
         res.send(json);
       }else{
         json.satatus = "ERROR";
         res.send(json);
       }
-      //res.send(JSON.stringify(results));
+      res.send(JSON.stringify(results[0].id));
       client.release();
     } catch (err) {
       console.error(err);
