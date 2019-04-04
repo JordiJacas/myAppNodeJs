@@ -61,6 +61,18 @@ app.get('/api/login/:username/:password', function (req, res){
 
     json.satatus = "ERROR";
     res.send(json);
+
+    try {
+      const client = await pool.connect()
+      const result = await client.query("SELECT * FROM test_table WHERE name='Jo' AND password='123'");
+      const results = { 'results': (result) ? result.rows : null};
+      //res.render('pages', results );
+      res.send(JSON.stringify(results));
+      client.release();
+    } catch (err) {
+      console.error(err);
+      res.send("Error " + err);
+    }
 });
 
 app.get('/db', async (req, res) => {
@@ -69,7 +81,14 @@ app.get('/db', async (req, res) => {
       const result = await client.query("SELECT * FROM test_table WHERE name='Jo' AND password='123'");
       const results = { 'results': (result) ? result.rows : null};
       //res.render('pages', results );
-      res.send(JSON.stringify(results));
+      if(results.isEmpty()){
+        json.satatus = "OK";
+        res.send(json);
+      }else{
+        json.satatus = "ERROR";
+        res.send(json);
+      }
+      //res.send(JSON.stringify(results));
       client.release();
     } catch (err) {
       console.error(err);
