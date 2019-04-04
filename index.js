@@ -79,9 +79,9 @@ app.get('/db', async (req, res) => {
     try {
       const client = await pool.connect()
       const result = await client.query("SELECT * FROM test_table WHERE name='Jo' AND password='123'");
-      const results = { 'results': (result) ? result.rows : null};
+      const results = { (result) ? result.rows : null};
       //res.render('pages', results );
-      res.send(JSON.stringify(results[0].id));
+      res.send(JSON.stringify(results.id));
       client.release();
     } catch (err) {
       console.error(err);
