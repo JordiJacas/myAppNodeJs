@@ -69,7 +69,7 @@ app.get('/db', async (req, res) => {
       const result = await client.query("SELECT * FROM test_table");
       const results = result.rows;
       //res.render('pages', results );
-      res.send(JSON.stringify(results));
+      res.send(JSON.stringify(results[0].name));
       client.release();
     } catch (err) {
       console.error(err);
