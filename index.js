@@ -63,7 +63,7 @@ app.get('/api/login/:username/:password', function (req, res){
     res.send(json);
 });
 
-.get('/db', async (req, res) => {
+app.get('/db', async (req, res) => {
     try {
       const client = await pool.connect()
       const result = await client.query('SELECT * FROM test_table');
@@ -76,4 +76,4 @@ app.get('/api/login/:username/:password', function (req, res){
     }
   })
 
-app.listen(process.env.PORT || 5000, () => console.log('Example app listening on port 3000!'));
+app.listen(process.env.PORT || 5000, () => console.log('Example app listening on port 5000!'));
