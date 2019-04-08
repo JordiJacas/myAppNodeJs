@@ -50,7 +50,7 @@ app.get('/', (req, res) => {
   if(isIncorrect) res.send('Login Incorrect');
 });
 
-/*app.get('/api/login/:username/:password', function (req, res){
+app.get('/api/login/:username/:password', function (req, res){
     var json = {};
 
     if(form[req.params.username] == req.params.password){
@@ -61,31 +61,27 @@ app.get('/', (req, res) => {
 
     json.satatus = "ERROR";
     res.send(json);
-});*/
-
-app.get('/api/login/:username/:password', function (req, res){
-  var json = {};
-  try {
-    const client = await pool.connect()
-    const result = await client.query("SELECT * FROM test_table WHERE name='Jordi' AND password='123'");
-    const results = result.rows;
-    //res.render('pages', results );
-    if(results[0] != null) {
-      json.satatus = "OK";
-    } else {
-      json.satatus = "ERROR";
-    }
-    res.send(json);
-    //res.send(JSON.stringify(results[0].name));
-    client.release();
-  } catch (err) {
-    console.error(err);
-    res.send("Error " + err);
-  }
 });
 
 app.get('/db', async (req, res) => {
-
+    var json = {};
+    try {
+      const client = await pool.connect()
+      const result = await client.query("SELECT * FROM test_table WHERE name='Jordi' AND password='123'");
+      const results = result.rows;
+      //res.render('pages', results );
+      if(results[0] != null) {
+        json.satatus = "OK";
+      } else {
+        json.satatus = "ERROR";
+      }
+      res.send(json);
+      //res.send(JSON.stringify(results[0].name));
+      client.release();
+    } catch (err) {
+      console.error(err);
+      res.send("Error " + err);
+    }
   })
 
 app.listen(process.env.PORT || 5000, () => console.log('Example app listening on port 5000!'));
