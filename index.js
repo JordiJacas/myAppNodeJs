@@ -71,11 +71,13 @@ app.get('/db/api/login/:username/:password', async (req, res) => {
       const client = await pool.connect()
       const result = await client.query("SELECT * FROM test_table WHERE name='"+username+"' AND password='"+password+"'");
       const results = result.rows;
+      json.username = username;
+      json.password = password;
       //res.render('pages', results );
       if(results[0] != null) {
-        json.satatus = "OK";
+        json.status = "OK";
       } else {
-        json.satatus = "ERROR";
+        json.status = "ERROR";
       }
       res.send(json);
       //res.send(JSON.stringify(results[0].name));
